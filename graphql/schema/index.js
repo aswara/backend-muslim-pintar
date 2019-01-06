@@ -9,7 +9,8 @@ module.exports = buildSchema(`
 
 	type Quiz {
 		_id: ID!
-		category: String!
+		categoryId: String!
+		category: Category!
 		question: String!
 		answer: String!
 		a: String!
@@ -23,7 +24,7 @@ module.exports = buildSchema(`
 	}
 
 	input QuizInput {
-		category: String!
+		categoryId: String!
 		question: String!
 		answer: String!
 		a: String!

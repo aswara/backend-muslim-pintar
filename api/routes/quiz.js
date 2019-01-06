@@ -1,43 +1,18 @@
 const express = require('express');
 const router = express.Router();
-const mongoose = require('mongoose')
 
-const Quiz = require('../../models/quiz')
-const Category = require('../../models/category')
+const QuizController = require('../controllers/quiz')
 
-router.get('/', (req, res, next) => {
-	Quiz.find()
-		.exec()
-		.then(docs => {
-			res.status(200).json(docs)
-		})
-		.catch(err => {
-			res.status(500).json({error: err})
-		})
-	
-})
+router.get('/', QuizController.get_all)
 
-router.post('/', (req, res, next) =>{
-	const quiz = new Quiz({
-		_id: new mongoose.Types.ObjectId(),
-		category: req.body.category,
-		question: req.body.question,
-		answer: req.body.answer,
-		a: req.body.a,
-		b: req.body.b,
-		c: req.body.c,
-		d: req.body.d
-	})
-	quiz.save()
-	.then(doc => {
-		res.status(201).json({
-			message: 'Success add quiz',
-			data: quiz
-		})
-	})
-	.catch(err =>{
-		res.status(500).json({error : err})
-	})
-});
+router.get('/category/:id', QuizController.get_quiz_category)
+
+router.post('/', QuizController.create_quiz)
+
+router.get('/:id', QuizController.get_quiz)
+
+router.put('/:id', QuizController.update_quiz)
+
+router.delete('/:id', QuizController.delete_quiz)
 
 module.exports = router;

@@ -2,16 +2,31 @@ const mongoose = require('mongoose')
 const Category = require('../../models/category')
 const Quiz = require('../../models/quiz')
 
-const quizzes = async category => {
+const category = async categoryId => {
+	console.log("tess")
 	try {
-		const quizzes = await Quiz.find({ category })
+		const category = await Category.findById(categoryId)
+		return {
+			...category._doc,
+			_id: category.id,
+			quizzes : quizzes.bind(this, category.id)
+		}
+	} catch (err) {
+		throw err
+	}
+}
+
+const quizzes = async categoryId => {
+	try {
+		const quizzes = await Quiz.find({ categoryId })
 		return quizzes.map(quiz => {
 			return {
 				...quiz._doc,
 				_id: quiz.id,
+				categoryId: quiz.categoryId.toString(),
+				category: category.bind(this, quiz.categoryId.toString())
 			}
 		})
-		return quizzes
 	} catch (err) {
 		throw err
 	}
@@ -24,7 +39,7 @@ module.exports = {
 			return {
 				...category._doc,
 				_id: category.id,
-				quizzes: quizzes.bind(this, category.name),
+				quizzes: quizzes.bind(this, category.id),
 			}
 		} catch (err) {
 			throw err
@@ -37,7 +52,7 @@ module.exports = {
 				return {
 					...category._doc,
 					_id: category.id,
-					quizzes: quizzes.bind(this, category.name),
+					quizzes: quizzes.bind(this, category.id),
 				}
 			})
 			return categories
