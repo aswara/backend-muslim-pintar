@@ -1,14 +1,13 @@
 const mongoose = require('mongoose');
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
-const jwtConfig = require('../config/jwt');
 
 const User = require('../../models/user');
 
 const createToken = (id) => {
 	return jwt.sign({
 		id: id
-	}, jwtConfig.secret);
+	}, process.env.JWT_SECRET);
 };
 
 exports.register = (req, res) => {

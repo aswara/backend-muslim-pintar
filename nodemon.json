@@ -1,5 +1,6 @@
 {
 	"env": {
-		"MONGO_ATLAS_PW": "root"
+		"MONGO_ATLAS_PW": "root",
+		"JWT_SECRET": "rahasia",
 	}
 }

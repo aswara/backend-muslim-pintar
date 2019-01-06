@@ -3,12 +3,11 @@ const router = express.Router();
 const jwt = require('jsonwebtoken');
 const passport = require('passport');
 require('../config/passport')();
-const jwtConfig = require('../config/jwt');
 
 const createToken = (auth) => {
 	return jwt.sign({
 		id: auth.id
-	}, jwtConfig.secret);
+	}, process.env.JWT_SECRET);
 };
 
 const generateToken = (req, res, next) => {
