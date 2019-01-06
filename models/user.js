@@ -23,8 +23,12 @@ const userSchema =  mongoose.Schema({
 		type: String,
 		default: null,
 		require: false,
+	},
+    point: {
+		type: Number,
+		default: 0,
+		require: false,
 	}
-    
 });
 
 module.exports = mongoose.model('User', userSchema);

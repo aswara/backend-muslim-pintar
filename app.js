@@ -18,7 +18,8 @@ const graphQlResolvers = require('./graphql/resolvers/index');
 //connect database
 mongoose.connect("mongodb://root:" + process.env.MONGO_ATLAS_PW + "@quiz-shard-00-00-saphf.mongodb.net:27017,quiz-shard-00-01-saphf.mongodb.net:27017,quiz-shard-00-02-saphf.mongodb.net:27017/test?ssl=true&replicaSet=quiz-shard-0&authSource=admin&retryWrites=true",
 	{
-		useNewUrlParser: true
+		useNewUrlParser: true,
+		useCreateIndex: true
 	}
 );
 

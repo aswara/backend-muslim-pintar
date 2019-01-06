@@ -98,3 +98,50 @@ exports.profile = (req, res) => {
 		res.status(500).json({error: err})
 	})
 }
+
+//add point
+exports.true = (req, res) => {
+	const id = req.user.id;
+	User.findById(id)
+	.exec()
+	.then(docs => {
+		const point = Number(docs.point) + 10;
+		User.updateOne({ _id: id}, { point })
+		.then(result => {
+			res.status(200).json({
+				point,
+				message: 'Success add point',
+			})
+		})
+		.catch(err => {
+			res.status(500).json({error: err})
+		})
+	})
+	.catch(err => {
+		res.status(500).json({error: err})
+	})
+}
+
+
+//reduce point
+exports.false = (req, res) => {
+	const id = req.user.id;
+	User.findById(id)
+	.exec()
+	.then(docs => {
+		const point = Number(docs.point) - 5;
+		User.updateOne({ _id: id}, { point })
+		.then(result => {
+			res.status(200).json({
+				point,
+				message: 'Success reduce point',
+			})
+		})
+		.catch(err => {
+			res.status(500).json({error: err})
+		})
+	})
+	.catch(err => {
+		res.status(500).json({error: err})
+	})
+}
