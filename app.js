@@ -10,6 +10,7 @@ const categoryRoutes = require('./api/routes/categories');
 const quizRoutes = require('./api/routes/quiz');
 const authRoutes = require('./api/routes/auth');
 const userRoutes = require('./api/routes/user');
+const adminRoutes = require('./api/routes/admin');
 
 //graphql api
 const graphQlSchema = require('./graphql/schema/index');
@@ -62,6 +63,7 @@ app.use('/api/category', categoryRoutes);
 app.use('/api/quiz', quizRoutes);
 app.use('/api/auth', authRoutes);
 app.use('/api/user', userRoutes);
+app.use('/api/admin', adminRoutes);
 
 
 //route Graphql
