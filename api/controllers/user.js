@@ -171,11 +171,25 @@ exports.level = (req, res) => {
 		const newPoint = getNewPoint(point, level);
 		const treshold =  factor * (level + 1);
 
-		res.status(200).json({
-			level,
-			newPoint,
-			treshold
-		});
+		if(point >= treshold) {
+			User.updateOne({ _id: id}, { level, point: newPoint })
+			.then(result => {
+				res.status(200).json({
+					level,
+					newPoint,
+					treshold
+				});
+			})
+			.catch(err => {
+				res.status(500).json({error: err})
+			})
+		} else {
+			res.status(200).json({
+				level,
+				newPoint,
+				treshold
+			});
+		}
 
 	})
 	.catch(err => {
