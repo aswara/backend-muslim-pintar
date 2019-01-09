@@ -129,7 +129,7 @@ exports.false = (req, res) => {
 	User.findById(id)
 	.exec()
 	.then(docs => {
-		const point = Number(docs.point) - 5;
+		const point = Number(docs.point) - 10;
 		User.updateOne({ _id: id}, { point })
 		.then(result => {
 			res.status(200).json({
@@ -137,6 +137,44 @@ exports.false = (req, res) => {
 				message: 'Success reduce point',
 			})
 		})
+		.catch(err => {
+			res.status(500).json({error: err})
+		})
+	})
+	.catch(err => {
+		res.status(500).json({error: err})
+	})
+}
+
+//get level
+const factor = 100;
+function setLevel(point, currentLevel) {
+	if (point < 0 && currentLevel != 0) return currentLevel -= 1; 
+	if ((currentLevel * factor) <= point && point < (factor * (currentLevel + 1))) return currentLevel;
+	return currentLevel += 1;
+}
+
+function getNewPoint(point, newLevel) {
+	if (point < 0) return point += (factor * (newLevel + 1));
+ 	return point %= 100;
+}
+
+exports.level = (req, res) => {
+	const id = req.user.id;
+	User.findById(id)
+	.exec()
+	.then(docs => {
+		const point = Number(docs.point);
+		const currentLevel = Number(docs.level);
+		const level = setLevel(point, currentLevel);
+		const newPoint = getNewPoint(point, level);
+		const treshold =  factor * (level + 1);
+
+		res.status(200).json({
+			level,
+			newPoint,
+			treshold
+		});
 		.catch(err => {
 			res.status(500).json({error: err})
 		})

@@ -10,5 +10,6 @@ router.post( '/login', UserController.login );
 router.post( '/register', UserController.register );
 router.get( '/answer/true', CheckAuth, UserController.true );
 router.get( '/answer/false', CheckAuth, UserController.false );
+router.get( '/level', CheckAuth, UserController.level );
 
 module.exports = router;
