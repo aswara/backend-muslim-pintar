@@ -150,11 +150,12 @@ exports.false = (req, res) => {
 const factor = 100;
 function setLevel(point, currentLevel) {
 	if (point < 0 && currentLevel != 0) return currentLevel -= 1; 
+	if (point < 0 && currentLevel == 0) return currentLevel;
 	if ((currentLevel * factor) <= point && point < (factor * (currentLevel + 1))) return currentLevel;
 	return currentLevel += 1;
 }
-
 function getNewPoint(point, newLevel) {
+	if (point < 0 && newLevel == 0) return point;
 	if (point < 0) return point += (factor * (newLevel + 1));
  	return point %= 100;
 }
