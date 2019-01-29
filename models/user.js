@@ -8,7 +8,7 @@ const userSchema =  mongoose.Schema({
 	},
 	email: {
 		type: String, require: true,
-		trim: true, unique: true,
+		match: /[\w|\.]*@\w+\.[a-z]*(\.[a-z]*)?/, unique: true,
 	},
 	name: {
 		type: String,
@@ -30,9 +30,9 @@ const userSchema =  mongoose.Schema({
 		require: false,
 	},
     level: {
-	type: Number,
-	default: 0,
-	require: false,
+		type: Number,
+		default: 0,
+		require: false,
 	}
 });
 
